@@ -37,9 +37,6 @@ inner join customers on orders.customerid = customers.customerid
 group by customers.city;
 
 ## delete all users that have no orders. Should delete 17 (or 18 if you haven't deleted the record added) records.
-* SELECT Customers.CustomerName, count(Orders.Orderid)
-from customers
-left join orders
-on customers.customerid = orders.customerid
-group by customers.customername
-having count(orders.orderid) = 0;
+* delete from customers where customerid in(select (c.customerid) from customers c
+left join orders on orders.customerid = c.customerid
+group by c.customerid having count(orders.customerid) = 0);
